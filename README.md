@@ -1,4 +1,4 @@
-# TransFOL
+# EFOL-SL
 
 ![ ](figure/3-3.png)
 
