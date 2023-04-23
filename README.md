@@ -1,8 +1,8 @@
 # TransFOL
 
-![ ](figure/3-2.png)
+![ ](figure/3-3.png)
 
-**This is the data and code for our paper** `TransFOL: A Logical Query Model Based on Cross-Transformer for Drug–Drug Interaction Prediction`.
+**This is the data and code for our paper** `Mask and Visualize: Explainable Complex Knowledge Multi-hop Reasoning Mechanism for Predicting Synthetic Lethality in Human Cancers`.
 
 ## Prerequisites
 
@@ -22,12 +22,10 @@ conda install pytorch=1.8.1 cudatoolkit=10.1 pyg -c pyg -c pytorch -y
 
 We provide the dataset in the [data](data/) folder.
 
-| Data | Source | Description |
-| --- | --- | --- |
-| [Drugbank](data/drugbank/)| [This link](https://bitbucket.org/kaistsystemsbiology/deepddi/src/master/data/) | A drug-drug interaction network betweeen 1,709 drugs with 136,351 interactions. |
-| [TWOSIDES](data/TWOSIDES/) | [This link](http://snap.stanford.edu/biodata/datasets/10017/10017-ChChSe-Decagon.html) | A drug-drug interaction network betweeen 645 drugs with 46,221 interactions. |
-| [DrugCombDB](data/DrugCombDB) | [This link](http://drugcombdb.denglab.org/) | An integrated biomedical network contains more than 4 million drugs and other entities. We extract a subgraph dataset containing the relationship "*drug-dose-target-response*" from it.|
-| [Phenomebrowser](data/Phenomebrowser) | [This link](http://www.phenomebrowser.net/#/) | An integrated biomedical network include  61,146 medical entities and 1,246,726 medical entity pairs.  We extract sub-datasets that contain the "*mammal symptom-human symptom-drug-disease*" relationship from it. |
+| Data | Description |
+| --- | --- |
+| [SynLethDB-v1.0](data/SynLethDB-v1.0/)| 19,667 SL interactions among 6375 genes. |
+| [SynLethDB-v2.0](data/SynLethDB-v2.0/) | 36,741 SL interactions among 10,218 genes. |
 
 ## Reproduction
 
@@ -36,18 +34,18 @@ Change `root_dir` option for the location to save model checkpoints.
 
 The location for the extracted dataset
 should be specified in the `data_dir` in the config files.
-For exmpale, if the `drugbank` dataset is in `/data/drugbank`,
+For exmpale, if the `SynLethDB-v2.0` dataset is in `/data/SynLethDB-v2.0`,
 this is what the `data_dir` options should be set.
 
 Alternatively, pretrained models are available
-at [Google Drive](https://drive.google.com/drive/folders/1FI4TqRI_bXUSNMAuf0F2qUCmUQGjtn_j).
+at [Google Drive](https://drive.google.com/drive/folders/1fBAwWtJiq7RPufBPvhPEhFsyHIB3oIm9).
 
-To reproduce all results for `drugbank`:
+To reproduce all results for `SynLethDB-v2.0`:
 
 ```bash
-transfol="python main.py -c configs/drugbank.json"
-$ transfol training_2i 
-$ transfol testing_2i
+efol_sl="python main.py -c configs/configs.json"
+$ efol_sl training_2i 
+$ efol_sl testing_2i
 ```
 
 ## Documentation
@@ -62,21 +60,16 @@ src
   │  model.py
   │  sampler.py
   │  train.py
-  │
   ├─configs
-    │      drugbank.json
-    │      DrugCombDB.json
-    │      Phenomebrowser.json
-    │      TWOSIDES.json
-    │
+        │  configs.json
   ├─pretrained_model
   └─tasks
-          base.py
-          betae.py
-          pretrain.py
-          real_query.py
-          reasoning.py
-          __init__.py
+        │  base.py
+        │  betae.py
+        │  pretrain.py
+        │  real_query.py
+        │  reasoning.py
+        │  __init__.py
 ```
 
 ### Model
@@ -113,7 +106,7 @@ See [`./src/main.py`](./src/main.py) for a full list of available options.
 
 <summary>CUDA Out of Memory</summary>
 
-We run experiments with V100(32GB) GPU, please reduce the batch size if you don't have enough resources. Be aware that smaller batch size will hurt the performance for contrastive training
+We run experiments with V100(32GB) GPUs, please reduce the batch size if you don't have enough resources. Be aware that smaller batch size will hurt the performance for contrastive training
 If the issue persists after adjusting batch size, downgrade pytorch to as early as possible (e.g. LTS 1.8.1 as of 2021/03).
 This is possibly due to memory issues in higher pytorch versions.
 See <https://github.com/pytorch/pytorch/issues/67680> for more information.
