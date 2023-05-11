@@ -2,7 +2,7 @@
 
 ![ ](figure/3-3.png)
 
-**This is the data and code for our paper** `Mask and Visualize: Explainable Complex Knowledge Multi-hop Reasoning Mechanism for Predicting Synthetic Lethality in Human Cancers`.
+**This is the data and code for our paper** `Interpretable Complex Knowledge Multi-hop Reasoning Model for Predicting Synthetic Lethality in Human Cancers`.
 
 ## Prerequisites
 
